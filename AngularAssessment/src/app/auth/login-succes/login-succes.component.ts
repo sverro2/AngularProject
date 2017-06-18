@@ -21,8 +21,7 @@ export class LoginSuccesComponent implements OnInit {
     console.log("Token is: " + token);
 
     //configure AuthService
-    this.auth.connectionToken = token;
-    this.auth.username = username;
+    this.auth.setAuthDetails(username, token);
   }
 
 }

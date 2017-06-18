@@ -11,7 +11,7 @@ export class HeaderComponent {
   currentTheme = 'light-theme';
   loggedIn = false;
 
-  constructor(private themeService: ThemeService, private auth: AuthService) { }
+  constructor(private themeService: ThemeService, public auth: AuthService) { }
 
   //Select a theme and make sure everyone knows the theme has changed
   onSelectTheme(theme: string) {

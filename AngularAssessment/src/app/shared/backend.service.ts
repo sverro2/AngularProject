@@ -10,8 +10,8 @@ export class BackendService {
 
   createAuthHeader(): Headers {
     const authHeader = new Headers();
-    authHeader.append('x-username', this.auth.username);
-    authHeader.append('x-token', this.auth.connectionToken);
+    authHeader.append('x-username', this.auth.getUserName());
+    authHeader.append('x-token', this.auth.getConnectionToken());
     return authHeader;
   }
 
