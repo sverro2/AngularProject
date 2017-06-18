@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 export class AuthService {
   private connectionToken: string;
   private username: string;
-  private authInitUrl = 'http://mahjongmayhem.herokuapp.com/auth/avans?callbackUrl=localhost:4200/login-succes'
+  private authInitUrl = `http://mahjongmayhem.herokuapp.com/auth/avans?callbackUrl=${location.origin}/login-succes`;
 
   constructor() { }
 
