@@ -1,0 +1,90 @@
+$tile-width: 57px;
+$tile-height: 78px;
+$tile-margin: 3px;
+$tile-background-offset-x: -80px;
+$tile-background-offset-y: -12px;
+$tile-raster-offset-x: -61.6px;
+$tile-raster-offset-y: -82.3px;
+
+.tile {
+  width: $tile-width;
+  height: $tile-height;
+  background-color: pink;
+  background-image: url('http://mahjongmayhem.herokuapp.com/Tiles_sprite1.jpg');
+  margin: $tile-margin;
+}
+
+@function getXRasterOffset($x-index){
+  @return $tile-background-offset-x + $x-index * $tile-raster-offset-x;
+}
+
+@function getYRasterOffset($y-index){
+  @return $tile-background-offset-y + ($y-index * $tile-raster-offset-y);
+}
+
+//Circle classes
+$circle-slug: Circle !default;
+@for $i from 1 through 9 {
+  .#{$circle-slug}-#{$i} {
+      background-position: getXRasterOffset($i - 1) getYRasterOffset(0);
+  }
+}
+
+//Bamboo classes
+$bamboo-slug: Bamboo !default;
+@for $i from 1 through 9 {
+  .#{$bamboo-slug}-#{$i} {
+      background-position: getXRasterOffset($i - 1) getYRasterOffset(4);
+  }
+}
+
+//Character classes
+$character-slug: Character !default;
+@for $i from 1 through 9 {
+  .#{$character-slug}-#{$i} {
+      background-position: getXRasterOffset($i - 1) getYRasterOffset(8);
+  }
+}
+
+//Dragons
+.Dragon-White {
+    background-position: getXRasterOffset(9) getYRasterOffset(8);
+}
+
+.Dragon-Green {
+    background-position:  getXRasterOffset(10) getYRasterOffset(8);
+}
+
+//Dragons
+.Wind-North {
+    background-position:  getXRasterOffset(12) getYRasterOffset(0);
+}
+
+.Wind-East {
+    background-position:  getXRasterOffset(9) getYRasterOffset(0);
+}
+
+.Wind-West {
+    background-position:  getXRasterOffset(10) getYRasterOffset(0);
+}
+
+.Wind-South {
+    background-position:  getXRasterOffset(11) getYRasterOffset(0);
+}
+
+//Flowers
+.Flower-Orchid {
+    background-position:  getXRasterOffset(10) getYRasterOffset(6);
+}
+
+.Flower-Chrysantememum {
+    background-position: getXRasterOffset(10) getYRasterOffset(7);
+}
+
+.Flower-Bamboo {
+    background-position: getXRasterOffset(10) getYRasterOffset(4);
+}
+
+.Flower-Plum {
+    background-position: getXRasterOffset(10) getYRasterOffset(5);
+}
