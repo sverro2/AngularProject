@@ -1,0 +1,10 @@
+<h3>My Games</h3>
+<app-games-table [gamesList]="gamesList | games:null:username:username | slice:0:10"></app-games-table>
+<h3>Other games</h3>
+<div class="btn-group">
+  <label routerLink="/games" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="btn btn-primary">Toon alles</label>
+  <label routerLink="/games" fragment="open" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="btn btn-primary">Open voor deelname</label>
+  <label routerLink="/games" fragment="playing" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="btn btn-primary">Nu actief</label>
+  <label routerLink="/games" fragment="finished" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="btn btn-primary">Door jou gespeeld</label>
+</div>
+<app-games-table [gamesList]="gamesList | games:currentFilter:null:playedByUserFilter | slice:0:50"></app-games-table>

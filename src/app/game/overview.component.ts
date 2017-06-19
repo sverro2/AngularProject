@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { OverviewService } from './overview.service';
 import { GameModel } from '../shared/game.model';
 import { AuthService } from '../auth/auth.service';
@@ -25,18 +25,19 @@ export class OverviewComponent implements OnInit, OnDestroy {
       this.gamesList = games;
     });
 
-    this.route.params.subscribe((params: Params) => {
+    this.route.fragment.subscribe((fragment: string) => {
       let filterArray: string[] = [];
 
-      if (params.filter) {
-        if (params.filter === 'finished') {
+      if (fragment) {
+        if (fragment === 'finished') {
           this.playedByUserFilter = this.username;
         }else {
           this.playedByUserFilter = null;
         }
+
+        filterArray.push(fragment);
       }
 
-      filterArray.push(params.filter);
       this.currentFilter = filterArray;
 
       this.socket = io("http://mahjongmayhem.herokuapp.com?gameId=5946c8db3dd8aa00117ad6ce");

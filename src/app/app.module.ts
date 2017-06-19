@@ -7,8 +7,7 @@ import { AppComponent } from './app.component';
 
 import { CoreModule } from './core/core.module';
 import { AuthModule } from './auth/auth.module';
-import { GameModule } from './game/game.module';
-import { OverviewModule } from './overview/overview.module';
+import { OverviewModule } from './game/overview.module';
 
 import { LoginSuccesComponent } from './auth/login-succes/login-succes.component';
 
@@ -28,8 +27,7 @@ const routes: Routes = [
     HttpModule,
     CoreModule,
     AuthModule,
-    OverviewModule,
-    GameModule
+    OverviewModule
   ],
   bootstrap: [AppComponent]
 })
