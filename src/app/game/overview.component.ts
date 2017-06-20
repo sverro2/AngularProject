@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { OverviewService } from './overview.service';
 import { GameModel } from '../shared/game.model';
 import { AuthService } from '../auth/auth.service';
-import * as io from "socket.io-client";
 
 @Component({
   selector: 'app-overview',
@@ -16,7 +15,6 @@ export class OverviewComponent implements OnInit, OnDestroy {
   currentFilter: string[] = [];
   username: string;
   playedByUserFilter: string = null;
-  socket: any;
 
   constructor(private overviewService: OverviewService, private route: ActivatedRoute, private auth: AuthService) { }
 
@@ -39,18 +37,13 @@ export class OverviewComponent implements OnInit, OnDestroy {
       }
 
       this.currentFilter = filterArray;
-
-      this.socket = io("http://mahjongmayhem.herokuapp.com?gameId=5946c8db3dd8aa00117ad6ce");
-      this.socket.on('start', () => {
-        console.log('Game started!');
-      })
     })
 
     this.username = this.auth.getUserName();
   }
 
   ngOnDestroy() {
-    this.socket.close();
+
   }
 
 }

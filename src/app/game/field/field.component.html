@@ -1,0 +1,10 @@
+<div class="field">
+  <div *ngIf="gameStarted; else preview" class="inner">
+    <app-tile *ngFor="let tile of gameTiles" [tileModel]="tile"></app-tile>
+  </div>
+  <ng-template #preview>
+    <div class="inner">
+      <app-tile *ngFor="let tile of gameTiles" [tileModel]="tile"></app-tile>
+    </div>
+  </ng-template>
+</div>

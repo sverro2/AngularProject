@@ -1,44 +1,7 @@
-<div class="tile Circle-1"></div>
-<div class="tile Circle-2"></div>
-<div class="tile Circle-3"></div>
-<div class="tile Circle-4"></div>
-<div class="tile Circle-5"></div>
-<div class="tile Circle-6"></div>
-<div class="tile Circle-7"></div>
-<div class="tile Circle-8"></div>
-<div class="tile Circle-9"></div>
-<div class="tile Character-1"></div>
-<div class="tile Character-2"></div>
-<div class="tile Character-3"></div>
-<div class="tile Character-4"></div>
-<div class="tile Character-5"></div>
-<div class="tile Character-6"></div>
-<div class="tile Character-7"></div>
-<div class="tile Character-8"></div>
-<div class="tile Character-9"></div>
-<div class="tile Bamboo-1"></div>
-<div class="tile Bamboo-2"></div>
-<div class="tile Bamboo-3"></div>
-<div class="tile Bamboo-4"></div>
-<div class="tile Bamboo-5"></div>
-<div class="tile Bamboo-6"></div>
-<div class="tile Bamboo-7"></div>
-<div class="tile Bamboo-8"></div>
-<div class="tile Bamboo-9"></div>
-<div class="tile Dragon-White"></div>
-<div class="tile Dragon-Green"></div>
-<div class="tile Wind-North"></div>
-<div class="tile Wind-East"></div>
-<div class="tile Wind-South"></div>
-<div class="tile Wind-West"></div>
-<div class="tile Flower-Orchid"></div>
-<div class="tile Flower-Chrysantememum"></div>
-<div class="tile Flower-Bamboo"></div>
-<div class="tile Flower-Plum"></div>
-
+<app-field [gameId]="'59486a70d34a0200114bbe14'"></app-field>
 
 <h3>My Games</h3>
-<app-games-table [gamesList]="gamesList | games:null:username:username | slice:0:10"></app-games-table>
+<app-games-overview [gamesList]="gamesList | games:null:username:username | slice:0:10"></app-games-overview>
 <h3>Other games</h3>
 <div class="btn-group">
   <label routerLink="/games" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="btn btn-primary">Toon alles</label>
@@ -46,4 +9,4 @@
   <label routerLink="/games" fragment="playing" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="btn btn-primary">Nu actief</label>
   <label routerLink="/games" fragment="finished" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="btn btn-primary">Door jou gespeeld</label>
 </div>
-<app-games-table [gamesList]="gamesList | games:currentFilter:null:playedByUserFilter | slice:0:50"></app-games-table>
+<app-games-overview [gamesList]="gamesList | games:currentFilter:null:playedByUserFilter | slice:0:50"></app-games-overview>

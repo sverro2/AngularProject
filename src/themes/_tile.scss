@@ -9,7 +9,7 @@ $tile-raster-offset-y: -82.3px;
 .tile {
   width: $tile-width;
   height: $tile-height;
-  background-color: pink;
+  background-color: gray;
   background-image: url('http://mahjongmayhem.herokuapp.com/Tiles_sprite1.jpg');
   margin: $tile-margin;
 }
@@ -47,12 +47,16 @@ $character-slug: Character !default;
 }
 
 //Dragons
-.Dragon-White {
+.Dragon-Red {
     background-position: getXRasterOffset(9) getYRasterOffset(8);
 }
 
 .Dragon-Green {
     background-position:  getXRasterOffset(10) getYRasterOffset(8);
+}
+
+.Dragon-White {
+    background-position: getXRasterOffset(11) getYRasterOffset(8);
 }
 
 //Dragons
@@ -87,4 +91,25 @@ $character-slug: Character !default;
 
 .Flower-Plum {
     background-position: getXRasterOffset(10) getYRasterOffset(5);
+}
+
+//Seasons
+.Season-Spring {
+    background-position:  getXRasterOffset(9) getYRasterOffset(7);
+}
+
+.Season-Summer {
+    background-position: getXRasterOffset(9) getYRasterOffset(6);
+}
+
+.Season-Autumn {
+    background-position: getXRasterOffset(9) getYRasterOffset(5);
+}
+
+.Season-Winter {
+    background-position: getXRasterOffset(9) getYRasterOffset(4);
+}
+
+.Joker {
+    background-position: getXRasterOffset(12) getYRasterOffset(8);
 }

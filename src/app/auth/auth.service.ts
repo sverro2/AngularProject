@@ -6,7 +6,10 @@ export class AuthService {
   private username: string;
   private authInitUrl = `http://mahjongmayhem.herokuapp.com/auth/avans?callbackUrl=${location.origin}/login-succes`;
 
-  constructor() { }
+  constructor() {
+    this.username = localStorage.getItem('username');
+    this.connectionToken = localStorage.getItem('connectionToken');
+  }
 
   hasConnectionToken(): boolean {
     return this.connectionToken != null;
@@ -23,6 +26,10 @@ export class AuthService {
   setAuthDetails(username: string, connectionToken: string) {
     this.username = username;
     this.connectionToken = connectionToken;
+
+    //save in localStorage
+    localStorage.setItem('username', this.username);
+    localStorage.setItem('connectionToken', this.connectionToken);
   }
 
   getAuthInitUrl(){
@@ -32,5 +39,8 @@ export class AuthService {
   logout(){
     this.username = null;
     this.connectionToken = null;
+
+    localStorage.removeItem('username');
+    localStorage.removeItem('connectionToken');
   }
 }
