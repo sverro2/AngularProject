@@ -11,7 +11,7 @@ import { AlertService } from '../shared/alert/alert.service';
 import { AlertModel } from '../shared/alert/alert.model';
 
 @Injectable()
-export class gameService {
+export class GameService {
   socket: any;
 
   //observables
@@ -23,6 +23,7 @@ export class gameService {
   constructor(private backend: BackendService, private alert: AlertService) { }
 
   initGame(gameId: string) {
+    console.log('initializing service');
     this.initializeSocket(gameId);
   }
 
@@ -75,6 +76,6 @@ export class gameService {
   }
 
   closeGame() {
-    this.socket.close();
+    this.socket.disconnect();
   }
 }

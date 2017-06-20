@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, HostBinding } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { TileModel } from '../../shared/tile.model';
 
 const tileWidth = 60;
@@ -13,6 +13,7 @@ export class TileComponent implements OnInit {
   @Input() tileModel: TileModel = null;
   @Input() selected = false;
   @Input() matched = false;
+  @Output() clickedTile = new EventEmitter<string>();
   xPos: string;
   yPos: string;
   zIndex: string;
@@ -35,6 +36,10 @@ export class TileComponent implements OnInit {
         this.matched = true;
       }
     }
+  }
+
+  onClick() {
+    this.clickedTile.emit(this.tileModel._id);
   }
 
 }

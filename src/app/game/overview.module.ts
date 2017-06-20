@@ -9,6 +9,7 @@ import { CreateComponent } from './create/create.component';
 import { TileComponent } from './tile/tile.component';
 import { FieldComponent } from './field/field.component';
 import { TileDirective } from './tile/tile.directive';
+import { GameService } from './game.service';
 
 const overviewRoutes: Routes = [
     { path: "games", component: OverviewComponent /*, canActivate: [AuthGuard]*/ },
@@ -27,6 +28,9 @@ const overviewRoutes: Routes = [
     TileComponent,
     FieldComponent,
     TileDirective
+  ],
+  providers: [
+    GameService
   ]
 })
 export class OverviewModule { }

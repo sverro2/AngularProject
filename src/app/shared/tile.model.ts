@@ -1,4 +1,5 @@
 export class TileModel {
+  _id: string;
   xPos: number;
   yPos: number;
   zPos: number;
@@ -13,4 +14,5 @@ export class TileModel {
     othertileId: string,
     foundOn: string
   }
+  selected: boolean;
 }

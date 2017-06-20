@@ -22,7 +22,7 @@ export class TileDirective implements OnChanges {
 
   ngOnChanges() {
     if (this.selected) {
-      this.opacity = 0.4;
+      this.opacity = 0.8;
     }else{
       this.opacity = 1.0;
     }
