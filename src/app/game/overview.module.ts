@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms'
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { AuthGuard } from '../auth/auth.guard';
@@ -13,11 +14,14 @@ import { GameService } from './game.service';
 
 const overviewRoutes: Routes = [
     { path: "games", component: OverviewComponent /*, canActivate: [AuthGuard]*/ },
+    { path: "games/create", component: CreateComponent /*, canActivate: [AuthGuard]*/ },
+    { path: "games/:id", component: OverviewComponent /*, canActivate: [AuthGuard]*/ },
 ];
 
 @NgModule({
   imports: [
     CommonModule,
+    FormsModule,
     RouterModule.forChild(overviewRoutes)
   ],
   declarations: [

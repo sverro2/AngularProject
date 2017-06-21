@@ -1,3 +1,30 @@
-<p>
-  create works!
-</p>
+<div class="row">
+  <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
+    <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+      <div class="form-group">
+        <label for="username">De gebruikte gametemplate:</label>
+        <div class="radio" *ngFor="let templateOption of templateList">
+          <label>
+            <input type="radio" name="templateName" [ngModel]="templateList[0]._id" [value]="templateOption._id" required>
+            {{ templateOption._id }}
+          </label>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="minPlayers">Minimum hoeveelheid spelers</label>
+        <input type="number" pattern="^[1-2][0-9]?$|^3[0-2]$|^[1-9]$" id="minPlayers" class="form-control" ngModel name="minPlayers" required>
+      </div>
+      <div class="form-group">
+        <label for="maxPlayers">Maximum hoeveelheid spelers</label>
+        <input type="number" pattern="^[1-2][0-9]?$|^3[0-2]$|^[1-9]$" id="maxPlayers" class="form-control" ngModel name="maxPlayers" required>
+      </div>
+      <div class="help-block" *ngIf="checkMinMaxIsValid()">Het minimum moet kleiner zijn dan het maximum en tussen de 1 en de 32 liggen!</div>
+      <button class="btn btn-primary" [disabled]="form.invalid || checkMinMaxIsValid()" type="submit">Submit</button>
+    </form>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <app-field [templateId]="form.value.templateName"></app-field>
+  </div>
+</div>

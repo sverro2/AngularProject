@@ -23,6 +23,8 @@ export class OverviewComponent implements OnInit, OnDestroy {
       this.gamesList = games;
     });
 
+    this.username = this.auth.getUserName();
+
     this.route.fragment.subscribe((fragment: string) => {
       let filterArray: string[] = [];
 
@@ -38,8 +40,6 @@ export class OverviewComponent implements OnInit, OnDestroy {
 
       this.currentFilter = filterArray;
     })
-
-    this.username = this.auth.getUserName();
   }
 
   ngOnDestroy() {

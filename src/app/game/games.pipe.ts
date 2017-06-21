@@ -6,7 +6,7 @@ import { GameModel } from '../shared/game.model';
 })
 export class GamesPipe implements PipeTransform {
 
-  transform(games: GameModel[], acceptedStatuses?: string[], filterCreatedByUsername?: string, playedByUsername?: string): GameModel[] {
+  transform(games: GameModel[], acceptedStatuses?: string[], filterCreatedById?: string, playedById?: string): GameModel[] {
     let filteredGames: GameModel[] = [];
 
     //check the games on different aspect, if one aspect fails, the game will be hidden
@@ -17,12 +17,12 @@ export class GamesPipe implements PipeTransform {
       }
 
       //check if game is created or played by the user
-      if(filterCreatedByUsername && playedByUsername){
-        if (!this.checkCreatedByUser(game, filterCreatedByUsername) && !this.checkPlayedByUser(game, playedByUsername)) {
+      if(filterCreatedById && playedById){
+        if (!this.checkCreatedById(game, filterCreatedById) && !this.checkPlayedById(game, playedById)) {
           continue;
         }
       }else{
-        if (!this.checkCreatedByUser(game, filterCreatedByUsername) || !this.checkPlayedByUser(game, playedByUsername)) {
+        if (!this.checkCreatedById(game, filterCreatedById) || !this.checkPlayedById(game, playedById)) {
           continue;
         }
       }
@@ -51,20 +51,20 @@ export class GamesPipe implements PipeTransform {
     return statusOk;
   }
 
-  checkCreatedByUser(game: GameModel, filterCreatedByUsername: string) : boolean {
-    if(filterCreatedByUsername && filterCreatedByUsername.length > 0){
-      return game.createdBy.name === filterCreatedByUsername;
+  checkCreatedById(game: GameModel, filterCreatedById: string) : boolean {
+    if(filterCreatedById && filterCreatedById.length > 0){
+      return game.createdBy._id === filterCreatedById;
     }else{
       return true;
     }
   }
 
-  checkPlayedByUser(game: GameModel, playedByUsername: string) : boolean {
-    if(playedByUsername && playedByUsername.length > 0){
+  checkPlayedById(game: GameModel, playedById: string) : boolean {
+    if(playedById && playedById.length > 0){
 
       if(game.players){
         for(const player of game.players){
-          if(player.name === playedByUsername){
+          if(player._id === playedById){
             return true;
           }
         }

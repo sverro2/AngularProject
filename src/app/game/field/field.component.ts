@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, OnDestroy, OnChanges } from '@angular/core';
 import { GameModel } from '../../shared/game.model';
 import { TileModel } from '../../shared/tile.model';
 import { UserModel } from '../../shared/user.model';
@@ -12,7 +12,7 @@ import { Subscription } from 'rxjs/Rx';
   templateUrl: './field.component.html',
   styleUrls: ['./field.component.scss']
 })
-export class FieldComponent implements OnInit, OnDestroy {
+export class FieldComponent implements OnInit, OnDestroy, OnChanges {
   @Input() gameId: string = null;
   @Input() templateId: string = null;
   selectedTiles: TileModel[] = [];
@@ -31,7 +31,6 @@ export class FieldComponent implements OnInit, OnDestroy {
   constructor(private gameService: GameService, private alertService: AlertService) { }
 
   ngOnInit() {
-    //init subscriptions
     this.startSubscription = this.gameService.startSubject.subscribe(() => {
     });
 
@@ -69,7 +68,13 @@ export class FieldComponent implements OnInit, OnDestroy {
         }
       });
     //if it is just used as a preview
-    }else {
+    }else if(this.templateId) {
+      this.showPreview();
+    }
+  }
+
+  ngOnChanges() {
+    if(this.templateId) {
       this.showPreview();
     }
   }

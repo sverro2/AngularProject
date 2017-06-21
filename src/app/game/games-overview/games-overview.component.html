@@ -6,7 +6,7 @@
       <th>Aangemaakt door</th>
       <th>Spel start</th>
       <th>Spel einde</th>
-      <th>Acties</th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
@@ -16,7 +16,41 @@
       <td>{{ game.createdBy.name }}</td>
       <td>{{ game.startedOn | date:"short" }}</td>
       <td>{{ game.endedOn | date:"short" }}</td>
-      <td></td>
+      <td>
+        <button
+        type="button"
+        name="button"
+        class="btn btn-danger pull-right"
+        *ngIf="isRemovable(game)"
+        (click)="onRemoveGame(game)">
+            Verwijderen
+        </button>
+
+        <button
+        type="button"
+        name="button"
+        class="btn btn-warning pull-right"
+        *ngIf="isAPlayer(game)"
+        (click)="onRemovePlayer(game)">
+          Uitschrijven
+        </button>
+
+        <button
+        type="button"
+        name="button"
+        class="btn btn-success pull-right"
+        *ngIf="!isAPlayer(game) && game.state === 'open'"
+        (click)="onAddPlayer(game)">
+          Inschrijven
+        </button>
+
+        <button type="button"
+        name="button"
+        class="btn btn-primary  pull-right"
+        (click)="onOpenGame(game)">
+          Kijken/Spelen
+        </button>
+      </td>
     </tr>
   </tbody>
 </table>
