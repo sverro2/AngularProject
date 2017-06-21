@@ -46,4 +46,20 @@ export class OverviewComponent implements OnInit, OnDestroy {
 
   }
 
+  onGameRemoved(game: GameModel) {
+    console.log('game removed');
+  }
+
+  onPlayerRemoved(game: GameModel) {
+    console.log('palyer removed');
+  }
+
+  onGameOpened(game: GameModel) {
+    console.log('game opened');
+  }
+
+  onPlayerAdded(game: GameModel) {
+    console.log('player added');
+  }
+
 }

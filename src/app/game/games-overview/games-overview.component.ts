@@ -53,5 +53,4 @@ export class GamesOverviewComponent implements OnInit {
   onOpenGame(game: GameModel) {
     this.openGame.emit(game);
   }
-
 }
