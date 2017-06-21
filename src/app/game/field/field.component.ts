@@ -1,8 +1,10 @@
 import { Component, OnInit, Input, OnDestroy, OnChanges } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
 import { GameModel } from '../../shared/game.model';
 import { TileModel } from '../../shared/tile.model';
 import { UserModel } from '../../shared/user.model';
 import { GameService } from '../game.service';
+import { SocketService } from '../socket.service';
 import { AlertService } from '../../shared/alert/alert.service';
 import { AuthService } from '../../auth/auth.service';
 import { AlertModel } from '../../shared/alert/alert.model';
@@ -14,15 +16,15 @@ import { Subscription } from 'rxjs/Rx';
   styleUrls: ['./field.component.scss']
 })
 export class FieldComponent implements OnInit, OnDestroy, OnChanges {
-  @Input() gameId: string = null;
-  @Input() templateId: string = null;
-  selectedTiles: TileModel[] = [];
-  currentGame: GameModel;
-  gameStarted: boolean;
-  gameTiles: TileModel[] = [];
-  gameTileIdMap: any = {};
-  gameTileLocationMap: any = {};
-  canStartGame: boolean = false;
+  @Input() gameId: string = null;       //the id of the game (optional)
+  @Input() templateId: string = null;   //the templateid (shanghai) (optional)
+  selectedTiles: TileModel[] = [];      //the tiles that are currently selected by the user
+  currentGame: GameModel;               //the model of the current game
+  gameStarted: boolean;                 //wheter or not the game already started
+  gameTiles: TileModel[] = [];          //a list of selectable mahjon-tiles
+  gameTileIdMap: any = {};              //a hashmap of the list of tiles (using the id as key)
+  gameTileLocationMap: any = {};        //a hashmap of the list of tiles (using the position as key)
+  canStartGame: boolean = false;        //is the user able to start the game (is the game not started yet, owns game, etc).
 
   //subscriptions
   startSubscription: Subscription;
@@ -30,32 +32,34 @@ export class FieldComponent implements OnInit, OnDestroy, OnChanges {
   playerSubscription: Subscription;
   matchSubscription: Subscription;
 
-  constructor(private gameService: GameService, private alertService: AlertService, private authService: AuthService) { }
+  constructor(private gameService: GameService,
+    private alertService: AlertService,
+    private authService: AuthService,
+    private socketService: SocketService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    this.startSubscription = this.gameService.startSubject.subscribe(() => {
+    this.startSubscription = this.socketService.startSubject.subscribe(() => {
       this.showGame();
     });
 
-    this.endSubscription = this.gameService.endSubject.subscribe(() => {
+    this.endSubscription = this.socketService.endSubject.subscribe(() => {
+      this.router.navigate(['../stats'], {relativeTo: this.activatedRoute});
     });
 
-    this.playerSubscription = this.gameService.playerJoinedSubject.subscribe((user: UserModel) => {
-      console.log("User joined matched: ");
-      console.log(user);
+    this.playerSubscription = this.socketService.playerJoinedSubject.subscribe((user: UserModel) => {
+      //nothing to do. The user automatically gets notified
     });
 
-    this.matchSubscription = this.gameService.matchSubject.subscribe((tiles: TileModel[]) => {
-      console.log("Tiles matched...");
-      console.log(tiles);
-
+    this.matchSubscription = this.socketService.matchSubject.subscribe((tiles: TileModel[]) => {
       for(const tile of tiles) {
-        this.gameTileIdMap[tile._id].match = { foundBy: 'sven', foundOn: 'now', othertileId: '325' };
+        this.gameTileIdMap[tile._id].match = { foundBy: 'unknow', foundOn: 'now', othertileId: '#' };
       }
     });
 
     if (this.gameId !== null) {
-      this.gameService.initGame(this.gameId);
+      this.socketService.initGameSocket(this.gameId);
     }
 
     this.initGame();
@@ -114,7 +118,7 @@ export class FieldComponent implements OnInit, OnDestroy, OnChanges {
     this.endSubscription.unsubscribe();
     this.playerSubscription.unsubscribe();
     this.matchSubscription.unsubscribe();
-    this.gameService.closeGame();
+    this.socketService.closeGameSocket();
   }
 
   onTileClicked(tileId: number) {

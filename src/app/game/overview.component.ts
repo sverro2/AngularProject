@@ -75,7 +75,7 @@ export class OverviewComponent implements OnInit, OnDestroy {
   }
 
   onGameOpened(game: GameModel) {
-    this.router.navigate(['/games/', game.id]);
+    this.router.navigate(['/games/', game.id, 'play']);
   }
 
   onPlayerAdded(game: GameModel) {

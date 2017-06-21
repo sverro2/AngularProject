@@ -23,7 +23,7 @@ export class GamesOverviewComponent implements OnInit {
   }
 
   isRemovable(game: GameModel): boolean {
-    return game.createdBy._id === this.userId;
+    return game.createdBy._id === this.userId && game.state === 'open';
   }
 
   isAPlayer(game: GameModel): boolean {

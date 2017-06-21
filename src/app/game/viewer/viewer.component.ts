@@ -12,7 +12,7 @@ export class ViewerComponent implements OnInit {
   constructor(private activatedRoute: ActivatedRoute) { }
 
   ngOnInit() {
-    this.gameId = this.activatedRoute.snapshot.params.gameId;
+    this.gameId = this.activatedRoute.parent.snapshot.params.gameId;
     console.log(this.gameId);
   }
 

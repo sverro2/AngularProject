@@ -11,7 +11,7 @@ export class TileModel {
   }
   match: {
     foundBy: string,
-    othertileId: string,
+    otherTileId: string,
     foundOn: string
   }
   selected: boolean;
