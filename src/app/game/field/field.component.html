@@ -1,3 +1,4 @@
+<button class="btn btn-success" *ngIf="canStartGame" (click)='onGameStart()'>Start het spel nu!</button>
 <div class="field">
   <div *ngIf="gameStarted; else preview" class="inner">
     <app-tile *ngFor="let tile of gameTiles" [tileModel]="tile" [matched]='tile.match !== undefined' [selected]='tile.selected' (clickedTile)="onTileClicked($event)"></app-tile>

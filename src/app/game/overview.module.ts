@@ -11,11 +11,12 @@ import { TileComponent } from './tile/tile.component';
 import { FieldComponent } from './field/field.component';
 import { TileDirective } from './tile/tile.directive';
 import { GameService } from './game.service';
+import { ViewerComponent } from './viewer/viewer.component';
 
 const overviewRoutes: Routes = [
-    { path: "games", component: OverviewComponent /*, canActivate: [AuthGuard]*/ },
-    { path: "games/create", component: CreateComponent /*, canActivate: [AuthGuard]*/ },
-    { path: "games/:id", component: OverviewComponent /*, canActivate: [AuthGuard]*/ },
+    { path: "games", component: OverviewComponent, canActivate: [AuthGuard] },
+    { path: "games/create", component: CreateComponent, canActivate: [AuthGuard] },
+    { path: "games/:gameId", component: ViewerComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
@@ -31,7 +32,8 @@ const overviewRoutes: Routes = [
     CreateComponent,
     TileComponent,
     FieldComponent,
-    TileDirective
+    TileDirective,
+    ViewerComponent
   ],
   providers: [
     GameService

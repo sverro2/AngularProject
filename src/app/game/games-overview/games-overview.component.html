@@ -30,7 +30,7 @@
         type="button"
         name="button"
         class="btn btn-warning pull-right"
-        *ngIf="isAPlayer(game)"
+        *ngIf="isAPlayer(game) && game.state === 'open'"
         (click)="onRemovePlayer(game)">
           Uitschrijven
         </button>

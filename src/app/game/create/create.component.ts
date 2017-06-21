@@ -1,4 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { CreateService } from './create.service';
 import { AlertService } from '../../shared/alert/alert.service';
@@ -14,7 +15,7 @@ export class CreateComponent implements OnInit {
   @ViewChild('form') formOutput: NgForm;
   templateList = ['male', 'female'];
 
-  constructor(private createService: CreateService, private alertService: AlertService) { }
+  constructor(private createService: CreateService, private alertService: AlertService, private router: Router) { }
 
   ngOnInit() {
     this.createService.getTemplates().subscribe((templates: any[]) => {
@@ -29,6 +30,7 @@ export class CreateComponent implements OnInit {
     this.createService.saveGame(this.formOutput.value).subscribe((success: boolean) => {
       if(success) {
         this.alertService.getAlertSubject().next(new AlertModel('success', 'Jouw spel is aangemaakt', 5000));
+        this.router.navigate(['/games']);
       }else{
         this.alertService.getAlertSubject().next(new AlertModel('danger', 'Er is iets verkeerd gegaan bij het toevoegen van jouw spel aan de database :O', 5000));
       }

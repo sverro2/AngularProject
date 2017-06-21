@@ -19,7 +19,7 @@ export class BackendService {
     return this.http.put(baseUrl + path, message, {headers: this.createAuthHeader()});
   }
 
-  requestPost(path: string, message:object){
+  postRequest(path: string, message:object){
     return this.http.post(baseUrl + path, message, {headers: this.createAuthHeader()});
   }
 

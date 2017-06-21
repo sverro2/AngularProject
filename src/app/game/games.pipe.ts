@@ -2,7 +2,8 @@ import { Pipe, PipeTransform } from '@angular/core';
 import { GameModel } from '../shared/game.model';
 
 @Pipe({
-  name: 'games'
+  name: 'games',
+  pure: false
 })
 export class GamesPipe implements PipeTransform {
 

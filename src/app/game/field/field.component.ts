@@ -4,6 +4,7 @@ import { TileModel } from '../../shared/tile.model';
 import { UserModel } from '../../shared/user.model';
 import { GameService } from '../game.service';
 import { AlertService } from '../../shared/alert/alert.service';
+import { AuthService } from '../../auth/auth.service';
 import { AlertModel } from '../../shared/alert/alert.model';
 import { Subscription } from 'rxjs/Rx';
 
@@ -21,6 +22,7 @@ export class FieldComponent implements OnInit, OnDestroy, OnChanges {
   gameTiles: TileModel[] = [];
   gameTileIdMap: any = {};
   gameTileLocationMap: any = {};
+  canStartGame: boolean = false;
 
   //subscriptions
   startSubscription: Subscription;
@@ -28,23 +30,28 @@ export class FieldComponent implements OnInit, OnDestroy, OnChanges {
   playerSubscription: Subscription;
   matchSubscription: Subscription;
 
-  constructor(private gameService: GameService, private alertService: AlertService) { }
+  constructor(private gameService: GameService, private alertService: AlertService, private authService: AuthService) { }
 
   ngOnInit() {
     this.startSubscription = this.gameService.startSubject.subscribe(() => {
+      this.showGame();
     });
 
     this.endSubscription = this.gameService.endSubject.subscribe(() => {
     });
 
     this.playerSubscription = this.gameService.playerJoinedSubject.subscribe((user: UserModel) => {
-      console.log("User joined matched: " + user.name);
+      console.log("User joined matched: ");
       console.log(user);
     });
 
     this.matchSubscription = this.gameService.matchSubject.subscribe((tiles: TileModel[]) => {
       console.log("Tiles matched...");
       console.log(tiles);
+
+      for(const tile of tiles) {
+        this.gameTileIdMap[tile._id].match = { foundBy: 'sven', foundOn: 'now', othertileId: '325' };
+      }
     });
 
     if (this.gameId !== null) {
@@ -62,6 +69,7 @@ export class FieldComponent implements OnInit, OnDestroy, OnChanges {
         this.templateId = game.gameTemplate.id;
 
         if (game.state === 'open') {
+          this.canStartGame = this.authService.getUserName() === this.currentGame.createdBy._id;
           this.showPreview();
         }else{
           this.showGame();
@@ -88,6 +96,7 @@ export class FieldComponent implements OnInit, OnDestroy, OnChanges {
 
   showGame() {
     this.gameStarted = true;
+    this.canStartGame = false;
 
     this.gameService.getGameTiles(this.gameId).subscribe((tiles: TileModel[]) => {
       this.gameTiles = tiles;
@@ -106,10 +115,6 @@ export class FieldComponent implements OnInit, OnDestroy, OnChanges {
     this.playerSubscription.unsubscribe();
     this.matchSubscription.unsubscribe();
     this.gameService.closeGame();
-  }
-
-  onMatch() {
-    this.gameTiles[0].match = { foundBy: 'sven', foundOn: 'now', othertileId: '325' };
   }
 
   onTileClicked(tileId: number) {
@@ -140,10 +145,6 @@ export class FieldComponent implements OnInit, OnDestroy, OnChanges {
     for(const tile of tilesToRemove) {
       this.gameTileIdMap[tile._id].match = tile.match;
     }
-  }
-
-  playMatch() {
-
   }
 
   validateTilePosition(selectedTile: TileModel): boolean {
@@ -244,17 +245,11 @@ export class FieldComponent implements OnInit, OnDestroy, OnChanges {
   validateSelection(selectedTile: TileModel) {
     if (this.selectedTiles.length > 0 && this.selectedTiles.length <= 2) {
       if (this.selectionIsValid(selectedTile, this.selectedTiles[0])) {
-        this.playMatch();
-
-        console.log('its a match!');
-        this.selectedTiles.push(selectedTile);
-        for(const tile of this.selectedTiles) {
-          tile.match = { foundBy: 'sven', foundOn: 'now', othertileId: '325' };
-        }
-        this.clearSelected();
-        this.alertService.getAlertSubject().next(new AlertModel('success', 'Je hebt een set gevonden!', 1000));
-
-
+        this.gameService.matchTiles(this.gameId, selectedTile._id, this.selectedTiles[0]._id).subscribe((success: boolean) => {
+          this.selectedTiles.push(selectedTile);
+          this.clearSelected();
+          this.alertService.getAlertSubject().next(new AlertModel('success', 'Je hebt een set gevonden!', 1000));
+        });
       }else {
         this.clearSelected();
         this.selectedTiles.push(selectedTile);
@@ -286,4 +281,7 @@ export class FieldComponent implements OnInit, OnDestroy, OnChanges {
     return x + '-' + y + '-' + z;
   }
 
+  onGameStart() {
+    this.gameService.startGame(this.gameId).subscribe();
+  }
 }

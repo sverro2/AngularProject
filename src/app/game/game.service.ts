@@ -48,28 +48,36 @@ export class GameService {
     });
   }
 
+  startGame(gameId: string): Observable<boolean> {
+    return this.backend.postRequest('/games/' + gameId + '/start', { }).map((message: Response) => {
+      return message.status === 200;
+    });
+  }
+
+  matchTiles(gameId: string, tile1Id: string, tile2Id: string): Observable<boolean> {
+    return this.backend.putRequest('/games/' + gameId + '/tiles', { tile1Id: tile1Id, tile2Id: tile2Id} ).map((message: Response) => {
+      return message.status === 200;
+    });
+  }
+
   initializeSocket(gameId: string){
     this.socket = io("http://mahjongmayhem.herokuapp.com?gameId=" + gameId);
     this.socket.on('start', () => {
-      console.log('Game started!');
       this.startSubject.next();
       this.alert.getAlertSubject().next(new AlertModel('success', 'Het spel is gestart', 5000));
     });
 
     this.socket.on('end', () => {
-      console.log('Game ended!');
       this.endSubject.next();
       this.alert.getAlertSubject().next(new AlertModel('danger', 'Het spel is afgelopen.', 5000));
     });
 
-    this.socket.on('playerjoined', (player: UserModel) => {
-      console.log('Player joined: ' + player.name);
+    this.socket.on('playerJoined', (player: UserModel) => {
       this.playerJoinedSubject.next(player);
-      this.alert.getAlertSubject().next(new AlertModel('info', `Player ${player.name} has joined the game.`, 5000));
+      this.alert.getAlertSubject().next(new AlertModel('info', `Player ${player._id} has joined the game.`, 5000));
     });
 
     this.socket.on('match', (tiles: TileModel[]) => {
-      console.log('Tiles played');
       console.log(tiles);
       this.matchSubject.next(tiles);
     });

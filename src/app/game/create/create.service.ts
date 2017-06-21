@@ -17,7 +17,7 @@ export class CreateService {
   }
 
   saveGame(gameToSave: {minPlayers: number, maxPlayers: number, templateName: string}): Observable<boolean> {
-    return this.backendService.requestPost('/games', gameToSave).map((message: Response) => {
+    return this.backendService.postRequest('/games', gameToSave).map((message: Response) => {
       const response: any = message.json();
       console.log(response);
 
