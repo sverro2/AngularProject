@@ -6,7 +6,4 @@ import { Component } from '@angular/core';
   styleUrls: ['./tabview.component.scss']
 })
 export class TabviewComponent {
-
-  constructor() { }
-
 }

@@ -2,7 +2,7 @@ import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { TabviewComponent } from './tabview.component';
 
-describe('LoginSuccessComponent', () => {
+describe('TabviewComponent', () => {
   beforeEach(async(() => {
 
     TestBed.configureTestingModule({

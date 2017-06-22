@@ -29,7 +29,7 @@ describe('AlertComponent', () => {
   it('should be viewable the component', async(() => {
     const fixture = TestBed.createComponent(AlertComponent);
     fixture.detectChanges();
-    
+
     const app = fixture.debugElement.nativeElement;
     expect(app).toBeTruthy();
   }));

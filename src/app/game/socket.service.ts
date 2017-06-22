@@ -22,7 +22,7 @@ export class SocketService {
     this.initializeGameSocket(gameId);
   }
 
-  initializeGameSocket(gameId: string){
+  private initializeGameSocket(gameId: string){
     this.socket = io("http://mahjongmayhem.herokuapp.com?gameId=" + gameId);
     this.socket.on('start', () => {
       this.startSubject.next();
